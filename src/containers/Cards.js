@@ -1,21 +1,22 @@
 // Packages
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import { Link } from 'react-router-dom';
-import shuffle from 'lodash.shuffle';
-import random from 'lodash.random';
-import { Stack, Direction } from 'swing';
-import styled from 'styled-components';
-import { withRouter } from 'react-router-dom';
-import Analytics from 'react-ga';
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import { Link } from "react-router-dom";
+import shuffle from "lodash.shuffle";
+import random from "lodash.random";
+import { Stack, Direction } from "swing";
+import styled from "styled-components";
+import { withRouter } from "react-router-dom";
+import Analytics from "react-ga";
 // Components
-import CareCard from '../components/Card';
-import Icon from '../components/icon';
+import CareCard from "../components/Card";
+import Icon from "../components/icon";
 // Utils
-import { fade } from '../utils/keyframes';
+import { fade } from "../utils/keyframes";
 // Data
-import CARDS from '../Data/cards.json';
-import COLORS from '../Data/colors.json';
+import CARDS from "../Data/cards.json";
+import COLORS from "../Data/colors.json";
+import BgImage from "../assets/images/Opened Card Page.svg";
 
 const InfoLink = styled(Link)`
   position: fixed;
@@ -31,7 +32,7 @@ const CareStack = styled.div`
   height: 62.686567164vh;
   position: relative;
   max-width: 465px;
-  max-height: 550px;
+  max-height: 580px;
   animation: ${fade} 1s ease;
   position: relative;
   top: -40px;
@@ -51,6 +52,7 @@ const Viewport = styled.main`
   display: flex;
   justify-content: center;
   align-items: center;
+  background-image: url(../assets/images/Opened Card Page.svg);
 `;
 
 const Instruction = styled.p`
@@ -81,7 +83,12 @@ class Cards extends Component {
     this.config = {
       throwOutDistance: () => Math.max(window.innerWidth, window.innerHeight),
       throwOutConfidence: () => 1,
-      allowedDirections: [Direction.DOWN, Direction.LEFT, Direction.RIGHT, Direction.UP],
+      allowedDirections: [
+        Direction.DOWN,
+        Direction.LEFT,
+        Direction.RIGHT,
+        Direction.UP,
+      ],
     };
     this.cardRefs = new Map();
     this.state = {
@@ -93,19 +100,19 @@ class Cards extends Component {
   }
 
   componentDidMount() {
-    document.addEventListener('keydown', this.onSpacebar);
+    document.addEventListener("keydown", this.onSpacebar);
     this.stack = Stack(this.config);
     this.cardRefs.forEach((ref, i) => {
       const el = ReactDOM.findDOMNode(this.cardRefs.get(i));
       this.stack.createCard(el);
     });
-    this.stack.on('dragstart', () => this.setState({ dragging: true }));
-    this.stack.on('dragend', () => this.setState({ dragging: false }));
-    this.stack.on('throwout', this.onThrowOut.bind(this));
+    this.stack.on("dragstart", () => this.setState({ dragging: true }));
+    this.stack.on("dragend", () => this.setState({ dragging: false }));
+    this.stack.on("throwout", this.onThrowOut.bind(this));
   }
 
   componentWillUnmount() {
-    document.removeEventListener('keydown', this.onSpacebar);
+    document.removeEventListener("keydown", this.onSpacebar);
     this.cardRefs.forEach((ref, i) => {
       const el = ReactDOM.findDOMNode(this.cardRefs.get(i));
       const card = this.stack.getCard(el);
@@ -127,14 +134,16 @@ class Cards extends Component {
       currentColors: getColor(),
     });
     Analytics.event({
-      category: 'Cards',
-      action: 'Card swiped',
+      category: "Cards",
+      action: "Card swiped",
     });
   }
 
   onSpacebar = (e) => {
     if (e.keyCode === 32) {
-      const el = ReactDOM.findDOMNode(this.cardRefs.get(this.state.currentCard));
+      const el = ReactDOM.findDOMNode(
+        this.cardRefs.get(this.state.currentCard)
+      );
       const card = this.stack.getCard(el);
       card && card.throwOut(random(-10, 10), random(-10, 0));
     }
@@ -157,10 +166,10 @@ class Cards extends Component {
   render() {
     return (
       <Viewport
-        style={{
-          background: this.state.colors[this.state.currentColors].background,
-          // background: "#FFFFFF",
-        }}
+      // style={{
+      //   background: this.state.colors[this.state.currentColors].background,
+      //   // background: "#FFFFFF",
+      // }}
       >
         <CareStack>
           {this.state.cards.map((card, i) => (
@@ -174,7 +183,10 @@ class Cards extends Component {
               active={i === this.state.currentCard}
               next={i === this.state.currentCard - 1}
               previous={i > this.state.currentCard}
-              dragging={(i === this.state.currentCard && this.state.dragging) || this.state.resetting}
+              dragging={
+                (i === this.state.currentCard && this.state.dragging) ||
+                this.state.resetting
+              }
             />
           ))}
         </CareStack>

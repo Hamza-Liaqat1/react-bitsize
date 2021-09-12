@@ -1,9 +1,14 @@
-*{
+* {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
-a{
+.background {
+  background: url("../src/assets/images/Landing Page.svg") no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+a {
   text-decoration: none;
 }
 @font-face {
@@ -42,7 +47,7 @@ a{
   padding-top: 18rem;
 }
 .card-wrapper .content h1 {
-   font-family: veronaMedium;
+  font-family: veronaMedium;
   font-style: normal;
   font-weight: bold;
   font-size: 48px;
@@ -51,7 +56,7 @@ a{
   padding-bottom: 40px;
 }
 .card-wrapper .content p {
-   font-family: veronaMedium;
+  font-family: veronaMedium;
   font-style: normal;
   font-weight: normal;
   font-size: 30px;
@@ -127,7 +132,7 @@ a{
     padding-top: 16rem;
   }
   .card-wrapper .content h1 {
-     font-family: veronaMedium;
+    font-family: veronaMedium;
     font-style: normal;
     font-weight: bold;
     font-size: 38px;
@@ -136,7 +141,7 @@ a{
     padding-bottom: 30px;
   }
   .card-wrapper .content p {
-     font-family: veronaMedium;
+    font-family: veronaMedium;
     font-style: normal;
     font-weight: normal;
     font-size: 26px;
@@ -185,4 +190,3 @@ a{
     margin-bottom: 40px;
   }
 }
-

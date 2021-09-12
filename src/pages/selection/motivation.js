@@ -3,8 +3,8 @@ import {motivationData} from "../../Data/data";
 import Cards from "../../containers/Cards";
 const Motivation = () => {
   return (
-    <div>
-      <Cards cardsData={motivationData}/>
+    <div className="background">
+      <Cards cardsData={motivationData} />
     </div>
   );
 };

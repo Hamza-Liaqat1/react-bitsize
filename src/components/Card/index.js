@@ -1,9 +1,9 @@
 // Packages
-import React, {Component} from "react";
+import React, { Component } from "react";
 import styled from "styled-components";
 // Config
 import COLORS from "../../config/colors";
-import {TwitterShareButton} from "react-share";
+import { TwitterShareButton } from "react-share";
 import twitterPic from "../../assets/images/twitter.svg";
 const revealSpeed = 0.3;
 const throwOutSpeed = 0.2;
@@ -32,7 +32,7 @@ const CareCard = styled.article`
   }};
   transform: ${(props) => (props.next ? "rotate(11deg) !important" : null)};
   background: ${(props) =>
-    props.next ? "rgba(255,255,255,0.2) !important" : null};
+    props.next ? "rgba(148, 190, 190, 1) !important" : null};
   transition: ${(props) => {
     if (props.dragging) return null;
     if (props.active)
@@ -47,23 +47,31 @@ const CareCard = styled.article`
     cursor: grabbing;
   }
 `;
-
+const ButtonIcon = styled.div`
+opacity: ${(props) => {
+  if (props.active) return 1;
+  if (props.next) return 0;
+  return 0;
+}};
+display: flex; 
+justify-content: center 
+`
 const Title = styled.h1`
   font-family: verona;
   margin-top: 30px;
-  line-height: 1.1em;
+  line-height: 51px;
   font-size: 35px;
   @media (max-width: 499px) {
     font-size: 9vw;
   }
   @media (min-width: 500px) {
-    font-size: 50px;
+    font-size: 45px;
   }
 `;
 
 const Text = styled.p`
   line-height: 33px;
-  margin: 70px 0 20px;
+  margin: 40px 0 30px;
   font-size: 25px;
   font-family: veronaMedium;
   @media (min-width: 500px) {
@@ -73,24 +81,27 @@ const Text = styled.p`
 
 class Card extends Component {
   render() {
-    const {color, title, text, active, next, dragging, previous} = this.props;
+    const { color, title, text, active, next, dragging, previous } = this.props;
     return (
       <CareCard
         active={active}
         next={next}
         dragging={dragging}
         previous={previous}
-        style={{background: color}}
+        style={{ background: color }}
       >
         <Title className="vser">{title}</Title>
         <Text>{text}</Text>
-        <div style={{display: "flex", justifyContent: "center"}}>
+        <ButtonIcon  
+        next={next}
+        active={active}
+        >
           <TwitterShareButton url="https://bitesize.io/" title={text}>
             <a className="twitter">
               <img src={twitterPic} alt="" />
             </a>
           </TwitterShareButton>
-        </div>
+        </ButtonIcon>
       </CareCard>
     );
   }
